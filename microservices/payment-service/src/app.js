@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const paymentRoutes = require('./routes/paymentRoutes');
-
 const app = express();
 
 // Middleware
@@ -11,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Request logging
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  console.log(`([${new Date().toISOString()}] ${req.method} ${req.path}`);
   next();
 });
 
