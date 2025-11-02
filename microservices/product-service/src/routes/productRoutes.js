@@ -5,6 +5,11 @@ const productController = require('../controllers/productController');
 // Health check
 router.get('/health', productController.healthCheck);
 
+// Health check for product-service 
+router.get('/health', (req, res) => {
+    res.json({ status: 'healthy', service: 'product-service' });
+});
+
 // Get all categories
 router.get('/categories', productController.getCategories);
 
