@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const productRoutes = require('./routes/productRoutes');
-
 const app = express();
 
 // Middleware
@@ -11,12 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // Request logging
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  console.log('[${new Date().toISOString()}] ${req.method} ${req.path}');
   next();
 });
 
 // Routes
 app.use('/api/products', productRoutes);
+app.use('/api/items', productRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
