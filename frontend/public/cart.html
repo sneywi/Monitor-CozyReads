@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your Shopping Cart - CozyReads">
+    <title>Shopping Cart - CozyReads</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+<!-- Nav bar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <!-- CozyReads -->
+            <a href="index.html" class="navbar-brand">
+                <span class="logo-text">CozyReads</span>
+            </a>
+            
+            <!-- Menu -->
+            <button class="menu-toggle hide-desktop" id="menu-toggle" aria-label="Toggle menu">
+                <span id="menu-icon"> ☰ </span>
+            </button>
+            
+            <!-- Navigation Menu -->
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li><a href="cart.html" class="active">Cart</a></li>
+            </ul>
+            
+            <!-- Actions -->
+            <div class="navbar-actions">
+                <!-- Cart Icon -->
+                <a href="cart.html" class="cart-icon active" aria-label="Shopping cart">
+                    <span>🛒</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
+                
+                <!-- Auth Button -->
+                <div id="auth-button">
+                    <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<!-- Cart header -->
+    <section class="cart-header">
+        <div class="container">
+            <div class="page-header fade-in">
+                <h1>Your Cart</h1>
+                <p class="page-subtitle">
+                    Review your selected books
+                </p>
+            </div>
+        </div>
+    </section>
+
+<!-- Cart section -->
+    <section class="cart-section section">
+        <div class="container">
+            
+            <!-- Alert Container -->
+            <div id="alert-container"></div>
+            
+            <!-- Loading State -->
+            <div class="loading hidden" id="loading-state">
+                <div class="spinner"></div>
+                <p style="margin-top: 1rem; color: var(--text-muted);">Loading your cart...</p>
+            </div>
+            
+            <!-- Cart Layout -->
+            <div class="cart-layout">
+                
+                <!-- Cart Items Section -->
+                <div class="cart-items-section">
+                    <div class="section-header">
+                        <h2>Items</h2>
+                        <button class="btn btn-outline btn-sm" onclick="clearCart()" id="clear-cart-btn">
+                            Clear All
+                        </button>
+                    </div>
+                    
+                    <!-- Cart Items Container -->
+                    <div id="cart-items">
+                        <!-- Items will be dynamically inserted here by cart.js -->
+                    </div>
+                </div>
+                
+                <!-- Cart Summary Section -->
+                <div class="cart-summary-section">
+                    <div class="cart-summary">
+                        <h3 class="summary-title">Order Summary</h3>
+                        
+                        <div class="summary-details">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (10%):</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping:</span>
+                                <span class="free-badge">FREE 🎉</span>
+                            </div>
+                            <div class="summary-divider"></div>
+                            <div class="summary-row summary-total">
+                                <span>Total:</span>
+                                <span id="total">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <button 
+                            class="btn btn-primary btn-block btn-lg" 
+                            onclick="proceedToCheckout()"
+                            id="checkout-btn"
+                        >
+                            Proceed to Checkout
+                        </button>
+                        
+                        <a href="index.html" class="btn btn-outline btn-block mt-1">
+                            ← Continue Shopping
+                        </a>
+                    </div>
+                    
+                    <!-- Trust Badges -->
+                    <div class="trust-badges">
+                        <div class="trust-badge">
+                            <span class="trust-icon">🔒</span>
+                            <span class="trust-text">Secure Checkout</span>
+                        </div>
+                        <div class="trust-badge">
+                            <span class="trust-icon">🚚</span>
+                            <span class="trust-text">Free Shipping</span>
+                        </div>
+                        <div class="trust-badge">
+                            <span class="trust-icon">↩️</span>
+                            <span class="trust-text">Easy Returns</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+    <footer class="footer section" style="background: var(--light-gray); border-top: 1px solid var(--mid-gray); margin-top: 3rem;">
+        <div class="container">
+            <div style="text-align: center; padding: 2rem 0;">
+                <div style="font-family: var(--font-logo); font-size: 1.5rem; color: var(--dark-green); margin-bottom: 1rem;">
+                    CozyReads 🌿
+                </div>
+                <p style="color: var(--text-muted);">
+                    © 2025 CozyReads. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+<!-- JS files -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cart.js"></script>
+    
+    <!-- Additional Scripts -->
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbarMenu = document.getElementById('navbar-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navbarMenu.classList.toggle('active');
+                menuIcon.textContent = navbarMenu.classList.contains('active') ? '✕' : '☰';
+            });
+        }
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Clear cart confirmation
+        function clearCart() {
+            if (confirm('Are you sure you want to clear your entire cart?')) {
+                window.location.reload();
+            }
+        }
+    </script>
+
+    <!-- Styles for Cart Page -->
+    <style>
+        .cart-header {
+            background: linear-gradient(180deg, var(--white) 0%, var(--light-green) 100%);
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--mid-gray);
+        }
+        
+        .page-header {
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            margin-bottom: 0.5rem;
+            font-family: var(--font-display);
+        }
+        
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .cart-section {
+            padding: 3rem 0;
+        }
+        
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--light-gray);
+            border-radius: var(--radius-lg);
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .cart-items-section {
+            min-height: 300px;
+        }
+        
+        /* Cart Summary */
+        .cart-summary {
+            padding: 2rem;
+            background: var(--white);
+            border: 1px solid var(--mid-gray);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .summary-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-family: var(--font-display);
+        }
+        
+        .summary-details {
+            margin-bottom: 2rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            font-size: 1rem;
+        }
+        
+        .summary-divider {
+            height: 1px;
+            background: var(--mid-gray);
+            margin: 1rem 0;
+        }
+        
+        .summary-total {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            padding-top: 1rem;
+        }
+        
+        .free-badge {
+            color: var(--success);
+            font-weight: 700;
+            background: rgba(102, 187, 106, 0.1);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+        }
+        
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--light-green);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        
+        .trust-icon {
+            font-size: 1.5rem;
+        }
+        
+        .trust-text {
+            font-weight: 600;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-summary {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cart-header {
+                padding: 2rem 0 1.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.25rem;
+            }
+            
+            .cart-summary {
+                padding: 1.5rem;
+            }
+            
+            .summary-title {
+                font-size: 1.25rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cart-section {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</body>
+</html>
