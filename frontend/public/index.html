@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CozyReads - A modern library for timeless stories">
+    <title>CozyReads - Modern Library</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+<!-- Navigation bar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <!-- CozyReads -->
+            <a href="index.html" class="navbar-brand">
+                <span class="logo-text">CozyReads</span>
+            </a>
+            
+            <!-- Menu Toggle -->
+            <button class="menu-toggle hide-desktop" id="menu-toggle" aria-label="Toggle menu">
+                <span id="menu-icon">☰</span>
+            </button>
+            
+            <!-- Navigation Menu -->
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            
+            <!-- Actions -->
+            <div class="navbar-actions">
+                <!-- Cart Icon -->
+                <a href="cart.html" class="cart-icon" aria-label="Shopping cart">
+                    <span>🛒</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
+                
+                <!-- Auth Button -->
+                <div id="auth-button">
+                    <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<!-- Hero section -->
+    <section class="hero section">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1 class="hero-title">
+                    Welcome to your cozy corner<br>
+                    of imagination 🪄.
+                </h1>
+                <p class="hero-subtitle">
+                    Dream, discover, and dwell among words.
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="search-input"
+                        placeholder="Search for books, authors, or categories..."
+                        aria-label="Search books"
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Category filters -->
+    <section class="categories section" id="categories">
+        <div class="container">
+            <div class="category-filters fade-in">
+                <button class="btn btn-glass active" data-category="all" onclick="filterByCategory('all')">
+                    📚 All Books
+                </button>
+                <button class="btn btn-glass" data-category="Fiction" onclick="filterByCategory('Fiction')">
+                    📖 Fiction
+                </button>
+                <button class="btn btn-glass" data-category="Non-Fiction" onclick="filterByCategory('Non-Fiction')">
+                    🌍 Non-Fiction
+                </button>
+                <button class="btn btn-glass" data-category="Technology" onclick="filterByCategory('Technology')">
+                    💻 Technology
+                </button>
+                <button class="btn btn-glass" data-category="Science" onclick="filterByCategory('Science')">
+                    🔬 Science
+                </button>
+                <button class="btn btn-glass" data-category="Biography" onclick="filterByCategory('Biography')">
+                    👤 Biography
+                </button>
+                <button class="btn btn-glass" data-category="Self-Help" onclick="filterByCategory('Self-Help')">
+                    🌱 Self-Help
+                </button>
+                <button class="btn btn-glass" data-category="Business" onclick="filterByCategory('Business')">
+                    💼 Business
+                </button>
+            </div>
+        </div>
+    </section>
+
+<!-- Products grid -->
+    <section class="products section">
+        <div class="container">
+            <!-- Loading State -->
+            <div class="loading hidden" id="loading-state">
+                <div class="spinner"></div>
+                <p style="margin-top: 1rem; color: var(--text-muted);">Loading books...</p>
+            </div>
+            
+            <!-- Alert Container -->
+            <div id="alert-container"></div>
+            
+            <!-- Products Grid -->
+            <div class="product-grid" id="product-grid">
+                <!-- Products will be dynamically inserted here by home.js -->
+            </div>
+        </div>
+    </section>
+
+<!-- About section -->
+    <section class="about-section section" id="about">
+        <div class="container">
+            <div class="about-content fade-in">
+                <h2 style="text-align: center; margin-bottom: 3rem; font-family: var(--font-logo);">
+                    About CozyReads
+                </h2>
+                
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="about-icon">📚</div>
+                        <h3>Our Mission</h3>
+                        <p>Sharing a quiet corner for people who love books.</p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <div class="about-icon">🌿</div>
+                        <h3>Our Values</h3>
+                        <p>Curiosity, comfort, and honest storytelling.</p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <div class="about-icon">✨</div>
+                        <h3>Our Story</h3>
+                        <p>Started in 2025 as a small personal project.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+    <footer class="footer-enhanced" style="background: var(--light-gray); border-top: 2px solid var(--mid-gray); margin-top: 0;">
+        <div class="container">
+            <div class="footer-content">
+                
+                <!-- CozyReads Info -->
+                <div class="footer-column">
+                    <div style="font-family: var(--font-logo); font-size: 1.8rem; color: var(--dark-green); margin-bottom: 1rem;">
+                        CozyReads 🌿
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem; font-family: 'Brush Script MT', cursive;">
+                        A modern library for timeless stories.
+                    </p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; font-family: 'Brush Script MT', cursive;">
+                        Bringing the joy of reading to book lovers worldwide since 2025.
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#categories">Categories</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="login.html">My Account</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <span class="contact-icon">📍</span>
+                            <span>123 Book Street, Reading City<br>Bookland, BK 12345</span>
+                        </li>
+                        <li>
+                            <span class="contact-icon">📞</span>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li>
+                            <span class="contact-icon">📧</span>
+                            <span>hello@cozyreads.com</span>
+                        </li>
+                        <li>
+                            <span class="contact-icon">🕒</span>
+                            <span>Mon-Fri: 9AM - 6PM EST</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Customer Service -->
+                <div class="footer-column">
+                    <h4 class="footer-heading">Customer Service</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="copyright">
+                        © 2025 CozyReads. All rights reserved.
+                    </p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <span class="separator">•</span>
+                        <a href="#">Terms of Service</a>
+                        <span class="separator">•</span>
+                        <a href="#">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<!-- JS Files -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/home.js"></script>
+    
+    <!-- Enhancements -->
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbarMenu = document.getElementById('navbar-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navbarMenu.classList.toggle('active');
+                menuIcon.textContent = navbarMenu.classList.contains('active') ? '✕' : '☰';
+            });
+        }
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Smooth hover effect for cards
+        function addCardEffects() {
+            const cards = document.querySelectorAll('.book-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transition = 'all 0.25s ease';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transition = 'all 0.25s ease';
+                });
+            });
+        }
+        
+        // Call after products load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(addCardEffects, 1000);
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+<!-- Styles for Hero Section -->
+    <style>
+        .hero {
+            background: linear-gradient(180deg, 
+                var(--white) 0%, 
+                var(--light-green) 100%
+            );
+            padding: 5rem 0 4rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .hero-title {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+        
+        .categories {
+            padding: 2rem 0;
+            background: var(--light-gray);
+        }
+        
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .category-filters .btn {
+            transition: all 0.25s ease;
+        }
+        
+        .category-filters .btn.active {
+            background: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+        
+        .category-filters .btn:hover:not(.active) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 0 2.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .category-filters {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</body>
+</html>
