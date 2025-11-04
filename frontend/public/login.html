@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login or Sign up to CozyReads">
+    <title>Login - CozyReads</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+<!-- Navigation bar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <!-- CozyReads -->
+            <a href="index.html" class="navbar-brand">
+                <span class="logo-text">CozyReads</span>
+            </a>
+            
+            <!-- Back to Home -->
+            <a href="index.html" class="btn btn-outline btn-sm">
+                ← Back to Home
+            </a>
+        </div>
+    </nav>
+
+<!-- Login/signup -->
+    <section class="auth-section section">
+        <div class="container">
+            <div class="auth-container fade-in">
+                
+                <!-- Tab Navigation -->
+                <div class="auth-tabs">
+                    <button 
+                        class="auth-tab active" 
+                        id="login-tab"
+                        aria-label="Login tab"
+                    >
+                        Login
+                    </button>
+                    <button 
+                        class="auth-tab" 
+                        id="signup-tab"
+                        aria-label="Sign up tab"
+                    >
+                        Sign Up
+                    </button>
+                    <div class="auth-tab-indicator" id="tab-indicator"></div>
+                </div>
+                
+                <!-- Alert Container -->
+                <div id="alert-container" style="margin-bottom: 1.5rem;"></div>
+                
+                <!-- Loading State -->
+                <div class="loading hidden" id="loading-state">
+                    <div class="spinner"></div>
+                </div>
+                
+                <!-- LOGIN FORM -->
+                <div class="auth-form-container" id="login-form-container">
+                    <div class="auth-header">
+                        <h2>Welcome back!</h2>
+                        <p>Enter your credentials to continue</p>
+                    </div>
+                    
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-email" class="form-label">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="login-email" 
+                                name="email" 
+                                class="form-input"
+                                placeholder="your.email@example.com"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password" class="form-label">Password</label>
+                            <div class="password-input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="login-password" 
+                                    name="password" 
+                                    class="form-input"
+                                    placeholder="Enter your password"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <button 
+                                    type="button" 
+                                    class="password-toggle"
+                                    onclick="togglePassword('login-password')"
+                                    aria-label="Toggle password visibility"
+                                >
+                                    👁️
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-extras">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="remember">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">
+                            Login
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- SIGNUP FORM -->
+                <div class="auth-form-container hidden" id="signup-form-container">
+                    <div class="auth-header">
+                        <h2>Create an account</h2>
+                        <p>Join CozyReads today</p>
+                    </div>
+                    
+                    <form id="signup-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="signup-name" class="form-label">Full Name</label>
+                            <input 
+                                type="text" 
+                                id="signup-name" 
+                                name="name" 
+                                class="form-input"
+                                placeholder="John Doe"
+                                required
+                                autocomplete="name"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signup-email" class="form-label">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="signup-email" 
+                                name="email" 
+                                class="form-input"
+                                placeholder="your.email@example.com"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signup-password" class="form-label">Password</label>
+                            <div class="password-input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="signup-password" 
+                                    name="password" 
+                                    class="form-input"
+                                    placeholder="At least 6 characters"
+                                    required
+                                    minlength="6"
+                                    autocomplete="new-password"
+                                >
+                                <button 
+                                    type="button" 
+                                    class="password-toggle"
+                                    onclick="togglePassword('signup-password')"
+                                    aria-label="Toggle password visibility"
+                                >
+                                    👁️
+                                </button>
+                            </div>
+                            <small class="form-hint">Minimum 6 characters</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+                            <div class="password-input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="signup-confirm-password" 
+                                    name="confirmPassword" 
+                                    class="form-input"
+                                    placeholder="Re-enter your password"
+                                    required
+                                    autocomplete="new-password"
+                                >
+                                <button 
+                                    type="button" 
+                                    class="password-toggle"
+                                    onclick="togglePassword('signup-confirm-password')"
+                                    aria-label="Toggle password visibility"
+                                >
+                                    👁️
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="terms" required>
+                                <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">
+                            Create Account
+                        </button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+    <footer class="footer-minimal">
+        <div class="container">
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.875rem;">
+                © 2025 CozyReads. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+<!-- JS files -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/login.js"></script>
+    
+    <!-- Additional Scripts -->
+    <script>
+        // Password toggle functionality
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.parentElement.querySelector('.password-toggle');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+        
+        // Tab indicator animation
+        function updateTabIndicator() {
+            const activeTab = document.querySelector('.auth-tab.active');
+            const indicator = document.getElementById('tab-indicator');
+            
+            if (activeTab && indicator) {
+                const rect = activeTab.getBoundingClientRect();
+                const parentRect = activeTab.parentElement.getBoundingClientRect();
+                
+                indicator.style.left = (rect.left - parentRect.left) + 'px';
+                indicator.style.width = rect.width + 'px';
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTabIndicator();
+            window.addEventListener('resize', updateTabIndicator);
+        });
+    </script>
+
+<!-- Styles for Login Page -->
+    <style>
+        .auth-section {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 0;
+            background: linear-gradient(180deg, var(--white) 0%, var(--light-green) 100%);
+        }
+        
+        .auth-container {
+            max-width: 480px;
+            width: 100%;
+            background: var(--white);
+            border: 1px solid var(--mid-gray);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            position: relative;
+            background: var(--light-gray);
+            border-radius: var(--radius-md);
+            padding: 4px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            z-index: 2;
+            border-radius: var(--radius-sm);
+        }
+        
+        .auth-tab.active {
+            color: var(--text-primary);
+        }
+        
+        .auth-tab-indicator {
+            position: absolute;
+            height: calc(100% - 8px);
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-base);
+            z-index: 1;
+            top: 4px;
+            box-shadow: var(--shadow-xs);
+        }
+        
+        /* Auth header */
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+        
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        /* Form styles */
+        .auth-form {
+            position: relative;
+        }
+        
+        .password-input-wrapper {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: all var(--transition-base);
+        }
+        
+        .password-toggle:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .form-hint {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+        
+        .form-extras {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-green);
+        }
+        
+        .forgot-password {
+            color: var(--primary-green);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer minimal */
+        .footer-minimal {
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .auth-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .auth-tab {
+                padding: 0.625rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</body>
+</html>
