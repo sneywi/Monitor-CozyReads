@@ -1,0 +1,154 @@
+# Docker compose configuration for CozyReads
+
+version: '3.8'
+
+services:
+
+  # Frontend service -> Nginx
+  frontend:
+    container_name: cozyreads-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - user-service
+      - product-service
+      - cart-service
+      - order-service
+      - payment-service
+    networks:
+      - cozyreads-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # User service -> Port 3001
+  user-service:
+    container_name: user-service
+    build:
+      context: ./microservices/user-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - JWT_EXPIRE=7d
+    networks:
+      - cozyreads-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/api/users/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Product service -> Port 3002
+  product-service:
+    container_name: product-service
+    build:
+      context: ./microservices/product-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+    networks:
+      - cozyreads-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3002/api/products/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Cart service -> Port 3003
+  cart-service:
+    container_name: cart-service
+    build:
+      context: ./microservices/cart-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=development
+      - PORT=3003
+      - PRODUCT_SERVICE_URL=http://product-service:3002
+    depends_on:
+      - product-service
+    networks:
+      - cozyreads-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3003/api/cart/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Order service -> Port 3004
+  order-service:
+    container_name: order-service
+    build:
+      context: ./microservices/order-service
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - CART_SERVICE_URL=http://cart-service:3003
+      - PRODUCT_SERVICE_URL=http://product-service:3002
+    depends_on:
+      - cart-service
+      - product-service
+    networks:
+      - cozyreads-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3004/api/orders/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Payment service -> Port 3005
+  payment-service:
+    container_name: payment-service
+    build:
+      context: ./microservices/payment-service
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    environment:
+      - NODE_ENV=development
+      - PORT=3005
+      - ORDER_SERVICE_URL=http://order-service:3004
+    depends_on:
+      - order-service
+    networks:
+      - cozyreads-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3005/api/payments/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# Networks
+networks:
+  cozyreads-network:
+    driver: bridge
+    name: cozyreads-network
+
