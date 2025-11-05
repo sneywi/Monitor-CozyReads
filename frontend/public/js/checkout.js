@@ -30,7 +30,7 @@ async function loadCheckoutData() {
         
         console.log('Loading checkout data for user:', userId);
         
-        const response = await apiCall('${API_CONFIG.CART_SERVICE}/${userId}');
+        const response = await apiCall(`${API_CONFIG.CART_SERVICE}/${userId}`);
         
         console.log('Checkout cart response:', response);
         
@@ -72,12 +72,12 @@ function displayOrderSummary() {
     console.log('Displaying order summary:', cartData);
     
     // Display items
-    orderItemsEl.innerHTML = cartData.items.map(item => '
+    orderItemsEl.innerHTML = cartData.items.map(item => `
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
             <span>${item.title} (x${item.quantity})</span>
             <span>${formatCurrency(item.price * item.quantity)}</span>
         </div>
-    ').join('');
+    `).join('');
     
     // Calculate totals
     const subtotal = cartData.totalPrice || 0;
@@ -163,7 +163,7 @@ async function handleCheckout(e) {
         console.log('Shipping address:', shippingAddress);
         
         // Step 1: Create order
-        const orderResponse = await apiCall('${API_CONFIG.ORDER_SERVICE}/create', {
+        const orderResponse = await apiCall(`${API_CONFIG.ORDER_SERVICE}/create`, {
             method: 'POST',
             body: JSON.stringify({
                 userId,
@@ -209,7 +209,7 @@ async function handleCheckout(e) {
         
         console.log('Processing payment:', {orderId, amount: order.totalAmount, method: selectedPaymentMethod});
         
-        const paymentResponse = await apiCall('${API_CONFIG.PAYMENT_SERVICE}/process', {
+        const paymentResponse = await apiCall(`${API_CONFIG.PAYMENT_SERVICE}/process`, {
             method: 'POST',
             body: JSON.stringify(paymentData)
         });
@@ -264,7 +264,7 @@ function showOrderSuccess(order) {
     const checkoutContainer = document.querySelector('.checkout-container');
     
     if (checkoutContainer) {
-        checkoutContainer.innerHTML = '
+        checkoutContainer.innerHTML = `
             <div class="order-success" style="text-align: center; padding: 3rem;">
                 <div style="font-size: 4rem; color: var(--success); margin-bottom: 1rem;">✓</div>
                 <h1 style="color: var(--success); margin-bottom: 1rem;">Order Placed Successfully!</h1>
@@ -280,7 +280,7 @@ function showOrderSuccess(order) {
                 </div>
                 <a href="index.html" class="btn btn-primary btn-lg">Continue Shopping</a>
             </div>
-        ';
+        `;
     }
     
     // Clear cart count

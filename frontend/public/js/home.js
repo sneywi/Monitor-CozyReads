@@ -17,7 +17,7 @@ async function loadProducts() {
         console.log('Loading products...');
         showLoading();
         
-        const response = await apiCall('${API_CONFIG.PRODUCT_SERVICE}');
+        const response = await apiCall(`${API_CONFIG.PRODUCT_SERVICE}`);
         console.log('Products API response:', response);
         
         // Handle different response formats
@@ -32,7 +32,7 @@ async function loadProducts() {
             return;
         }
         
-        console.log('Loaded ${allProducts.length} products');
+        console.log(`Loaded ${allProducts.length} products`);
         
         displayProducts(allProducts);
         
@@ -53,15 +53,15 @@ function displayProducts(products) {
     if (!productGrid) return;
     
     if (products.length === 0) {
-        productGrid.innerHTML = '
+        productGrid.innerHTML = `
             <div class="empty-state">
                 <p>No products found.</p>
             </div>
-        ';
+        `;
         return;
     }
     
-    productGrid.innerHTML = products.map(product => '
+    productGrid.innerHTML = products.map(product => `
         <div class="book-card">
             <img src="${product.imageUrl || 'images/book-placeholder.jpg'}" 
                  alt="${product.title}" 
@@ -87,7 +87,7 @@ function displayProducts(products) {
                 </button>
             </div>
         </div>
-    ').join('');
+    `).join('');
 }
 
 // Get stock CSS class
@@ -100,8 +100,8 @@ function getStockClass(stock) {
 // Get stock display text
 function getStockText(stock) {
     if (stock === 0) return 'Out of Stock';
-    if (stock < 5) return 'Only ${stock} left!';
-    return '${stock} in stock';
+    if (stock < 5) return `Only ${stock} left!`;
+    return `${stock} in stock`;
 }
 
 // Setup search functionality
@@ -222,7 +222,7 @@ async function addToCart(productId) {
         
         console.log('Adding to cart:', {userId, productId});
         
-        await apiCall('${API_CONFIG.CART_SERVICE}/add', {
+        await apiCall(`${API_CONFIG.CART_SERVICE}/add`, {
             method: 'POST',
             body: JSON.stringify({
                 userId,
@@ -259,7 +259,7 @@ async function updateCartBadge() {
     }
 
     try {
-        const response = await apiCall('${API_CONFIG.CART_SERVICE}/${userId}');
+        const response = await apiCall(`${API_CONFIG.CART_SERVICE}/${userId}`);
 
         console.log('Cart response:', response);
 

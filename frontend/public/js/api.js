@@ -1,5 +1,4 @@
 // API Call wrapper
-
 // Main API call function
 async function apiCall(url, options = {}) {
     try {
@@ -13,7 +12,7 @@ async function apiCall(url, options = {}) {
         
         // Add Authorization header if token exists
         if (token) {
-            headers['Authorization'] = 'Bearer ${token}';
+            headers['Authorization'] = `Bearer ${token}`;
         }
         
         // Make the request
@@ -27,7 +26,7 @@ async function apiCall(url, options = {}) {
         
         // Handle errors
         if (!response.ok) {
-            throw new Error(data.message || 'HTTP Error: ${response.status}');
+            throw new Error(data.message || `HTTP Error: ${response.status}`);
         }
         
         return data;
@@ -46,7 +45,6 @@ async function apiCall(url, options = {}) {
         throw error;
     }
 }
-
 // Show alert message
 function showAlert(message, type = 'info') {
     // Remove existing alerts
@@ -55,7 +53,7 @@ function showAlert(message, type = 'info') {
     
     // Create new alert
     const alert = document.createElement('div');
-    alert.className = 'alert alert-${type}';
+    alert.className = `alert alert-${type}`;
     alert.textContent = message;
     
     // Insert at top of container
@@ -67,7 +65,6 @@ function showAlert(message, type = 'info') {
         alert.remove();
     }, 5000);
 }
-
 // Show loading spinner
 function showLoading() {
     const loadingDiv = document.createElement('div');
@@ -76,7 +73,6 @@ function showLoading() {
     loadingDiv.innerHTML = '<div class="spinner"></div>';
     document.body.appendChild(loadingDiv);
 }
-
 // Hide loading spinner
 function hideLoading() {
     const loadingDiv = document.getElementById('loading-spinner');
@@ -84,12 +80,10 @@ function hideLoading() {
         loadingDiv.remove();
     }
 }
-
 // Format currency
 function formatCurrency(amount) {
-    return '$${parseFloat(amount).toFixed(2)}';
+    return `$${parseFloat(amount).toFixed(2)}`;
 }
-
 // Format date
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -99,13 +93,11 @@ function formatDate(dateString) {
         day: 'numeric'
     });
 }
-
 // Get cart count from localStorage
 function getCartCount() {
     const count = localStorage.getItem('cartCount') || 0;
     return parseInt(count);
 }
-
 // Update cart count in localStorage and UI
 function updateCartCount(count) {
     localStorage.setItem('cartCount', count);

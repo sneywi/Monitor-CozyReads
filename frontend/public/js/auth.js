@@ -132,7 +132,7 @@ function updateNavigation() {
     
     if (token && user) {
         // User is logged in - show welcome message and logout button
-        authButton.innerHTML = '
+        authButton.innerHTML = `
             <div class="user-info">
                 <span class="user-welcome">Hello,</span>
                 <span class="user-name">${user.name || user.email}</span>
@@ -140,12 +140,12 @@ function updateNavigation() {
             <button class="btn btn-outline btn-sm" onclick="logout()">
                 Logout
             </button>
-        ';
+        `;
     } else {
         // User is not logged in - show login button
-        authButton.innerHTML = '
+        authButton.innerHTML = `
             <a href="login.html" class="btn btn-primary btn-sm">Login</a>
-        ';
+        `;
     }
 }
 
