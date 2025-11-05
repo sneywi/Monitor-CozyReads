@@ -27,7 +27,7 @@ async function loadCart() {
         
         console.log('Loading cart for user:', userId);
         
-        const response = await apiCall('${API_CONFIG.CART_SERVICE}/${userId}');
+        const response = await apiCall(`${API_CONFIG.CART_SERVICE}/${userId}`);
         
         console.log('Cart API response:', response);
         
@@ -58,14 +58,14 @@ function displayCart() {
     
     // Empty cart
     if (!cartData || !cartData.items || cartData.items.length === 0) {
-        cartItemsContainer.innerHTML = '
+        cartItemsContainer.innerHTML = `
             <div class="empty-cart">
                 <div class="empty-cart-icon">🛒</div>
                 <h2>Your cart is empty</h2>
                 <p>Add some books to get started!</p>
                 <a href="index.html" class="btn btn-primary mt-2">Browse Books</a>
             </div>
-        ';
+        `;
         return;
     }
     
@@ -73,7 +73,7 @@ function displayCart() {
     cartItemsContainer.innerHTML = cartData.items.map(item => {
         console.log('Displaying item:', item);
         
-        return '
+        return `
             <div class="cart-item" data-product-id="${item.productId || item.id}">
                 <img src="${item.imageUrl || 'images/book-placeholder.jpg'}" 
                      alt="${item.title}" 
@@ -102,7 +102,7 @@ function displayCart() {
                     <strong>${formatCurrency(item.price * item.quantity)}</strong>
                 </div>
             </div>
-        ';
+        `;
     }).join('');
 }
 
@@ -149,7 +149,7 @@ async function updateQuantity(productId, newQuantity) {
         
         console.log('Updating quantity:', {userId, productId, newQuantity});
         
-        await apiCall('${API_CONFIG.CART_SERVICE}/update', {
+        await apiCall(`${API_CONFIG.CART_SERVICE}/update`, {
             method: 'PUT',
             body: JSON.stringify({
                 userId,
@@ -184,7 +184,7 @@ async function removeFromCart(productId) {
         
         console.log('Removing from cart:', {userId, productId});
         
-        await apiCall('${API_CONFIG.CART_SERVICE}/remove/${userId}/${productId}', {
+        await apiCall(`${API_CONFIG.CART_SERVICE}/remove/${userId}/${productId}`, {
             method: 'DELETE'
         });
         

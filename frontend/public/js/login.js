@@ -1,4 +1,4 @@
-// User auth: LOGIN/SIGNUP PAGE (login.html)
+// User auth: Login/signup page (login.html)
 
 let currentTab = 'login';
 
@@ -71,7 +71,7 @@ async function handleLogin(e) {
     try {
         showLoading();
         
-        const response = await apiCall('${API_CONFIG.USER_SERVICE}/login', {
+        const response = await apiCall(`${API_CONFIG.USER_SERVICE}/login`, {
             method: 'POST',
             body: JSON.stringify({ email, password })
         });
@@ -148,7 +148,7 @@ async function handleSignup(e) {
     try {
         showLoading();
         
-        const response = await apiCall('${API_CONFIG.USER_SERVICE}/register', {
+        const response = await apiCall(`${API_CONFIG.USER_SERVICE}/register`, {
             method: 'POST',
             body: JSON.stringify({ name, email, password })
         });
