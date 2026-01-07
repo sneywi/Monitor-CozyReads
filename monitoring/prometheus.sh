@@ -28,7 +28,7 @@ mv prometheus-${PROMETHEUS_VERSION}.linux-amd64/NOTICE "$INSTALL_DIR/"
 rm -rf prometheus-${PROMETHEUS_VERSION}.linux-amd64*
 echo "✔ Prometheus binaries installed"
 
-# 6. Write prometheus.yml (YOU will customize later)
+# 6. Write prometheus.yml
 cat <<'EOF' > "$INSTALL_DIR/prometheus.yml"
 # Prometheus Configuration for Monitor-CozyReads
 global:
@@ -114,7 +114,7 @@ EOF
 
 echo "✔ prometheus.yml created"
 
-# 7. Write alert_rules.yml (YOU will customize later)
+# 7. Write alert_rules.yml
 cat <<'EOF' > "$INSTALL_DIR/alert_rules.yml"
 groups:
   - name: cozyreads_critical_alerts
